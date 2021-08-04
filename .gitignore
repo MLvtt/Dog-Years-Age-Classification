@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.DS_Store
+data/expert_adult_224.npy
+data/expert_senior_224.npy
+data/expert_young_224.npy
+data/petfinder_senior_224.npy
