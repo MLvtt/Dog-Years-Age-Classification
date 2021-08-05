@@ -15,7 +15,7 @@ def img2np(path, list_of_filenames, size=(500, 500)):
             fp = path + fn
         else:    
             fp = path + '/' + fn
-        current_img = load_img(fp, target_size=size)
+        current_img = load_img(fp, target_size=size, color_mode='grayscale')
         img_np = img_to_array(current_img) * 1./255
         try:
             full_mat = img_array_stack(full_mat, img_np)
@@ -34,7 +34,7 @@ def img2np_save(path, outpath, img_size=(500, 500)):
     for fp, cat, img_lst in zip(filepaths[1:], categories, img_lists[1:]):
         print(fp, cat, len(img_lst))
         full_mat = img2np(fp, img_lst, img_size)
-        save_path = f"{outpath}{ds_name}_{cat.lower()}_{img_size[0]}.npy"
+        save_path = f"{outpath}{ds_name}_{cat.lower()}_{img_size[0]}_G.npy"
         np.save(save_path, full_mat)
         print(ds_name, cat.lower(), 'done')
     
@@ -42,7 +42,7 @@ def img2np_save(path, outpath, img_size=(500, 500)):
 
 if __name__ == "__main__":
     expert_ds_loc = '../../data/Expert_TrainEval'
-    petfinder_ds_loc = '../../data/PetFinder_All'
+    # petfinder_ds_loc = '../../data/PetFinder_All'
     output_path = '../data/'
     # img2np_save(expert_ds_loc, output_path, (224,224))
     # img2np_save(petfinder_ds_loc, output_path, (224,224))
