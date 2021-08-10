@@ -6,13 +6,12 @@ from tensorflow.python.ops.gen_array_ops import space_to_depth
 from dog_face_detector import DogFaceDetector
 
 dfd = DogFaceDetector()
-# model = load_model('../models/finalized_model.h5')
+model = load_model('../models/finalized_modelAdam.h5')
 # model2 = load_model('../models/finalized_model2.h5')
-model3 = load_model('../models/finalized_model4.h5')
 sdog_model = load_model('../models/finalized_model_sdog.h5')
 sdog_classes = pickle.load(open('../data/sdog_classes.pkl','rb'))
 
-def predict_dog(img_path, age_model=model3, sdog_model=sdog_model):
+def predict_dog(img_path, age_model=model, sdog_model=sdog_model):
     age, age_pct = predict_dog_age(img_path, age_model)
     breed, breed_pct = predict_dog_breed(img_path, sdog_model)
     if age == 'Puppy':
@@ -29,8 +28,8 @@ def predict_dog(img_path, age_model=model3, sdog_model=sdog_model):
 
 def predict_dog_age(img_path, model):
     dogage_classes = {0: 'Adult', 1: 'Puppy', 2: 'Senior'}
-    dfd.get_dogface(img_path, save=False)
-    dogface = dfd.dogface_imgs[0] * 1./255
+    dogface = dfd.get_dogface(img_path, save=False)[0]
+    dogface = dogface * 1./255
     # print(dogface * 1./255)
     dogface = np.expand_dims(dogface, axis=0)
     prediction = model.predict(dogface)
@@ -43,7 +42,7 @@ def predict_dog_age(img_path, model):
     # plt.imshow(dfd.img_result)
     return predicted_class, predicted_class_pct
 
-def predict_dog_breed(img_path, model=sdog_model):
+def predict_dog_breed(img_path, model):
     img = img_to_array(load_img(img_path, target_size=(224,224))) * 1./255
     prediction = model.predict(np.expand_dims(img, axis=0))
     sort_idx = np.argsort(prediction, axis=-1)[0][::-1]

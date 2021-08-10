@@ -13,7 +13,7 @@ from datetime import datetime
 from dog_face_detector import DogFaceDetector
 from dog_predictor import predict_dog
 
-# dfd = DogFaceDetector()
+dfd = DogFaceDetector()
 
 LARGE_FONT= ("Verdana", 12)
 plt.style.use("ggplot")
@@ -61,13 +61,7 @@ class StartPage(root_frame):
         browse_button = ttk.Button(self, textvariable=self.filepath,
                                    command=self.show_file).grid(row=1, column=0, columnspan=4)  # .pack()
     def browse_file(self): ### Fix
-        self.filename = askopenfilename(
-                                        # filetypes=(
-                                                    # ("JPG (*.jpg)", "*.jpg*"), 
-                                                    # ("JPEG (*.jpeg)", "*.jpeg*"), 
-                                                    # ("PNG (*.png)", "*.png*"), 
-                                                    # ("All Files (*.*)", "*.*"))
-                                                    )
+        self.filename = askopenfilename()
         return self.filename
     def show_file(self):
         file = self.browse_file()

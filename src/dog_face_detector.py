@@ -156,8 +156,9 @@ class DogFaceDetector:
         self.filename, self.ext = os.path.splitext(os.path.basename(self.img_path))
         self.img_og = cv2.cvtColor(cv2.imread(self.img_path), cv2.COLOR_BGR2RGB)
         img_og_shape = self.img_og.shape
-        if (img_og_shape[0] > 500) or (img_og_shape[1] > 500):
-            new_og_size = (int(500 * img_og_shape[0]/img_og_shape[1]), int(500 * img_og_shape[1]/img_og_shape[0]))
+        sizelim=800
+        if (img_og_shape[0] > sizelim) or (img_og_shape[1] > sizelim):
+            new_og_size = (int(sizelim * img_og_shape[0]/img_og_shape[1]), int(sizelim * img_og_shape[1]/img_og_shape[0]))
             self.img_og = cv2.resize(self.img_og, dsize=new_og_size)
         # self.img = cv2.resize(self.img_og, dsize=self.dsize, fx=0.5, fy=0.5)
 
