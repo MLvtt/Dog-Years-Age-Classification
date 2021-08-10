@@ -43,7 +43,7 @@ class DogFaceDetector:
         self._load_format_img()
         self._detect_faces()
         if self.face_detect_count == 0:
-            return
+            return {0: self.img_og}
         # padding_ratio()
         self._get_dogface_imgs(outpath, predict_features, save)
         return self.dogface_imgs
