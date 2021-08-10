@@ -136,6 +136,7 @@ class DogFaceDetector:
         if self.face_detect_count == 0:
             if self.verbose:
                 tqdm.write('Could Not Find Dog Face')
+            # self._detect_faces()
         elif self.face_detect_count == 1:
             if self.verbose:
                 tqdm.write('1 Dog Face Found')
@@ -158,7 +159,7 @@ class DogFaceDetector:
         img_og_shape = self.img_og.shape
         sizelim=800
         if (img_og_shape[0] > sizelim) or (img_og_shape[1] > sizelim):
-            new_og_size = (int(sizelim * img_og_shape[0]/img_og_shape[1]), int(sizelim * img_og_shape[1]/img_og_shape[0]))
+            new_og_size = (int(sizelim * img_og_shape[1]/img_og_shape[0]), int(sizelim * img_og_shape[0]/img_og_shape[1]))
             self.img_og = cv2.resize(self.img_og, dsize=new_og_size)
         # self.img = cv2.resize(self.img_og, dsize=self.dsize, fx=0.5, fy=0.5)
 
@@ -196,12 +197,15 @@ def check_dogface_dataset(dataset_path):
 
 if __name__ == '__main__':
     # img_path = '../../data/PetFinder_All/Senior/43690994_3.jpg'
-    img_path = '../../data/Expert_TrainEval/Senior/cross 12 M(5) copy.jpg'
+    img_path = '/Users/mbun/Code/dsi_galvanize/capstones/capstone_3/data/test_dataset/0V6Z5H8KK0.jpg'
     dfd = DogFaceDetector()
+    # dfd.img_path = img_path
+    # dfd._load_format_img()
+    # plt.imshow(dfd.img_og)
     df_img = dfd.get_dogface(img_path, predict_features=True, save=False)
-    print(dfd.img_og)
-    # plt.imshow(dfd.img_result)
-    # plt.show()
+    # print(dfd.img_og)
+    plt.imshow(dfd.img_result)
+    plt.show()
     # dfd.check_for_face(img_path)
 
     # DogFaceID(img_path)
