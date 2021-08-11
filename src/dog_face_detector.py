@@ -75,10 +75,12 @@ class DogFaceDetector:
             ## add bbox to result img
             cv2.rectangle(self.img_result, pt1=(x1, y1), pt2=(x2, y2), 
                             thickness=2, color=(255,0,0), lineType=cv2.LINE_AA)
-            dogface_img = self.img_og[y1:y2, x1:x2]
             if predict_features and (self.pred_path != False) and (self.pred_path != None):
                 shape = self._detect_features(d)
                 self.face_features[i] = shape
+                dogface_img = self.img_result[y1:y2, x1:x2]
+            else:
+                dogface_img = self.img_og[y1:y2, x1:x2]
 
             dogface_img = cv2.cvtColor(dogface_img, cv2.COLOR_BGR2RGB)
             dogface_img = cv2.resize(dogface_img, dsize=(224,224), 
@@ -197,15 +199,17 @@ def check_dogface_dataset(dataset_path):
 
 if __name__ == '__main__':
     # img_path = '../../data/PetFinder_All/Senior/43690994_3.jpg'
-    img_path = '/Users/mbun/Code/dsi_galvanize/capstones/capstone_3/data/test_dataset/0V6Z5H8KK0.jpg'
+    # img_path = '/Users/mbun/Code/dsi_galvanize/capstones/capstone_3/data/test_dataset/0V6Z5H8KK0.jpg'
+    img_path = '../img/YannaBun.jpeg'
     dfd = DogFaceDetector()
+    # print(cv2.imread(img_path))
     # dfd.img_path = img_path
     # dfd._load_format_img()
     # plt.imshow(dfd.img_og)
-    df_img = dfd.get_dogface(img_path, predict_features=True, save=False)
+    df_img = dfd.get_dogface(img_path, predict_features=True, save=True)
     # print(dfd.img_og)
     plt.imshow(dfd.img_result)
-    plt.show()
+    # plt.show()
     # dfd.check_for_face(img_path)
 
     # DogFaceID(img_path)
@@ -215,7 +219,7 @@ if __name__ == '__main__':
     # plt.imshow(load_format_image(img_path)[0])
     # plt.imshow(cv2.imread(img_path))
     # plt.imshow(DogFaceOnly(img_path, dsize=(224,224)))
-    # plt.show()
+    plt.show()
     # path = '../../data/PetFinder_All'
 
     # check_dogface_dataset(path)
